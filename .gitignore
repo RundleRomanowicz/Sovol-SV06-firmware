@@ -1,3 +1,10 @@
 printer-*_*.cfg
 .moonraker.conf.bkp
 .directory
+timelapse/*
+logs/*
+database/*
+systemd/*
+backup/* 
+comms/*
+gcodes/*
