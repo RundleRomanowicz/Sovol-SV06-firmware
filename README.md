@@ -1,15 +1,17 @@
 # 🚨 _One-Stop-Shop_ Klipper Configuration
 
-This branch contains the Klipper configuration and firmware for the **Sovol SV06** 3D printer.
+This branch contains the Klipper configuration and firmware for the **Sovol SV06 Plus** 3D printer.
 
-| Printer                     | Branch                                                                                    |
-| --------------------------- | ----------------------------------------------------------------------------------------- |
-| Sovol SV06                  | ✨**You are here**✨                                                                      |
-| Sovol SV06 Skr-Mini-E3-V3.0 | [skr-mini-e3-v3](https://github.com/bassamanator/Sovol-SV06-firmware/tree/skr-mini-e3-v3) |
-| Sovol SV06 Plus             | [sv06-plus](https://github.com/bassamanator/Sovol-SV06-firmware/tree/sv06-plus)           |
-| All other printers          | [any-printer](https://github.com/bassamanator/Sovol-SV06-firmware/tree/any-printer)       |
+| Printer                                                              | Branch                                                                                    |
+| -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| Sovol SV06                                                           | [master](https://github.com/bassamanator/Sovol-SV06-firmware/tree/master)                 |
+| Sovol SV06 Skr-Mini-E3-V3.0                                          | [skr-mini-e3-v3](https://github.com/bassamanator/Sovol-SV06-firmware/tree/skr-mini-e3-v3) |
+| ${\normalsize{\textcolor{darkturquoise}{\texttt{Sovol SV06 Plus}}}}$ | ⚡ $\small{\textcolor{darkturquoise}{\text{YOU ARE HERE}}}$ ⚡                            |
+| All other printers                                                   | [any-printer](https://github.com/bassamanator/Sovol-SV06-firmware/tree/any-printer)       |
 
 I am creating these files for my personal use and cannot be held responsible for what it might do to your printer. Use at your own risk.
+
+🙏🏻 🙌🏻 Big thanks to [blanchas3d](https://github.com/blanchas3d) in testing out this branch and reporting issues.
 
 ## Outline
 
@@ -36,7 +38,8 @@ I am creating these files for my personal use and cannot be held responsible for
 - 💥 This Klipper configuration is an _endpoint_, meaning that it contains **everything** that you could possibly need in order to have an excellent Klipper experience! 💥
 - Filament runout sensor usage implemented.
 - Minimum configuration settings for Mainsail/Fluiddpi to work.
-- SuperSlicer config bundle that contains the printer configuration, as well as what are considered by many to be the best print settings available for any FDM printer ([Ellis' SuperSlicer Profiles](https://github.com/AndrewEllis93/Ellis-SuperSlicer-Profiles)). Find the differences between the different print setting profiles [here](https://github.com/AndrewEllis93/Ellis-SuperSlicer-Profiles/tree/master/SuperSlicer). But basically, the 45 degree profile places the seam at the back.
+- A SuperSlicer config bundle that contains the printer configurations for the SV06/Plus, as well as what are considered by many to be the best print settings available for any FDM printer ([Ellis' SuperSlicer Profiles](https://github.com/AndrewEllis93/Ellis-SuperSlicer-Profiles)).
+- `NEW` <img src="./images/party_blob.gif" width="20" alt=''/> A PrusaSlicer config bundle based on Ellis' SuperSlicer Profiles.
 - Bed model and texture to use in SuperSlicer/PrusaSlicer.
 - Macros
   - **Improved** mechanical gantry calibration/`G34` macro that provides the user audio feedback, and time to check the calibration.
@@ -44,12 +47,12 @@ I am creating these files for my personal use and cannot be held responsible for
   - Parking macros (parks the printhead at various locations): `PARKFRONT`, `PARKFRONTLOW`, `PARKREAR`, `PARKCENTER`, `PARKBED`.
   - Load/unload filament macros.
   - `PURGE_LINE` macro.
-  - `NEW` <img src="./images/party_blob.gif" width="20" alt=''/> `TEST_SPEED` macro. <img src="./images/party_blob.gif" width="20" alt=''/> Find instructions [here](#how-do-i-use-the-test_speed-macro).
-- `NEW` <img src="./images/party_blob.gif" width="20" alt=''/> Klipper Adaptive Meshing & Purging (KAMP) added! <img src="./images/party_blob.gif" width="20" alt=''/> Read about it [here](#how-do-i-enable-kamp-klipper-adaptive-meshing--purging).
+  - `NEW` <img src="./images/party_blob.gif" width="20" alt=''/> `TEST_SPEED` macro. Find instructions [here](#how-do-i-use-the-test_speed-macro).
+- `NEW` <img src="./images/party_blob.gif" width="20" alt=''/> Klipper Adaptive Meshing & Purging (KAMP) added (disabled by default)! Read about it [here](#how-do-i-enable-kamp-klipper-adaptive-meshing--purging).
 
 ## Stay Up-to-Date
 
-**⭐ Star this project** (Highly recommended, starred users may receive priority over regular users)
+⭐ ${\normalsize{\textcolor{goldenrod}{\texttt{Star this project}}}}$
 
 Watch for releases and updates.
 
@@ -57,17 +60,19 @@ Watch for releases and updates.
 
 ## Preface
 
-Although I've made switching over to Klipper as easy as is possible, it can still be a challenge for some, especially considering that most of you have likely never used GNU+Linux. Save yourself the frustration, and fully read all documentation found on this page. Also note that Klipper is not a _must_, and is not for everyone. You can stick with Marlin, and have a fine 3D printing experience.
+Although I've made switching over to Klipper as easy as is possible, it can still be a challenge for some, especially considering that most of you have likely never used GNU+Linux. Save yourself the frustration, and _fully read all the documentation on this page_. Also note that Klipper is not a _must_, and is not for everyone. You can stick with Marlin, and have a fine 3D printing experience.
 
 ## Before You Begin
 
+- On the SV06 Plus, your screen will not work if you install Klipper. You can get it working again via the instructions found [here](https://github.com/fryc88/klipper-sv06plus-screen).
 - Read this documentation _fully!_
-- Make sure your printer is in good physical condition, because print and travel speeds will be _a lot faster_ than they were before. Consider yourself warned.
+- Make sure your printer is in good physical condition, because print and travel speeds will be _a lot faster_ than they were before. Beginner's would be wise to go through the steps mentioned [here](https://github.com/bassamanator/everything-sovol-sv06/blob/main/initialsteps.md). Consider yourself warned.
 - Follow the steps in order.
 - If an error was reported at a step, do no proceed to the next step.
 - It is assumed that you are connected to your host Raspberry Pi (or other host device) via SSH, and that your printer motherboard is connected to the host via a data USB cable. Note that most of the micro USB cables that you find at home are _unlikely_ to be data cables, and it's not possible to tell just by looking.
+- [Disable](https://github.com/bassamanator/everything-sovol-sv06/blob/main/initialsteps.md#disable-usb-cable-5v-pin) the USB cable's 5V pin.
 - It is also assumed that the username on the host device is `pi`. If that is not the case, you will have to manually edit `moonraker.conf` and `cfgs/misc-macros.cfg` and change any mentions of `/home/pi` to `/home/yourUserName`.
-- Klipper _must_ be installed on the host Raspberry Pi for everything to work. Easiest is to use a [~~FluiddPI~~](https://docs.fluidd.xyz/installation/fluiddpi#download) (⚠️ `FluiddPI` is not under active maintenance) or [MainsailOS](https://github.com/mainsail-crew/mainsail/releases/latest) image. Alternatively, you can install `Fluidd` or `Mainsail` via [KIAUH](https://github.com/th33xitus/kiauh).
+- Klipper _must_ be installed on the host Raspberry Pi for everything to work. Easiest is to use a [MainsailOS](https://github.com/mainsail-crew/mainsail/releases/latest) image. Alternatively, you can install `Fluidd` or `Mainsail` via [KIAUH](https://github.com/th33xitus/kiauh).
 - Robert Redford's performance in _Spy Game (2001)_ was superb!
 - It is assumed that there is one instance of Klipper installed. If you have multiple instances of Klipper installed, via `KIAUH` for example, then this guide is not for you. You can still use all the configs of course, but the steps in this guide will likely not work for you.
 - Your question has probably been answered already, but if it hasn't, please post in the [Discussion](https://github.com/bassamanator/Sovol-SV06-firmware/discussions) section.
@@ -116,13 +121,13 @@ You can choose _either_ of the 2 following methods.
 2. Empty entire `~/printer_data/config` folder.
    - In linux, you can delete files via `rm fileName` and directories via `rmdir directoryName`.
    - In linux, you can list files and folders via `ls -lah`.
-3. `git clone -b master --single-branch https://github.com/bassamanator/Sovol-SV06-firmware.git .` ⚠️ Don't miss the period!
+3. `git clone -b sv06-plus --single-branch https://github.com/bassamanator/Sovol-SV06-firmware.git .` ⚠️ Don't miss the period!
 
 #### Method 2: Download the ZIP
 
-1. [Download](https://github.com/bassamanator/Sovol-SV06-firmware/archive/refs/heads/master.zip) the `ZIP` file containing the Klipper configuration.
+1. [Download](https://github.com/bassamanator/Sovol-SV06-firmware/archive/refs/heads/sv06-plus.zip) the `ZIP` file containing the Klipper configuration.
 2. See `Step 2` in `Method 1`.
-3. The parent folder in the `ZIP` is `Sovol-SV06-firmware-master`. This is relevant in the next step.
+3. The parent folder in the `ZIP` is `Sovol-SV06-firmware-sv06-plus`. This is relevant in the next step.
 4. Extract **only** the _contents_ of the parent folder into `~/printer_data/config`.
 
 ## Initial Steps
@@ -162,9 +167,9 @@ You will be pasting/typing these commands into the Mainsail/Fluidd console.
 1. Check to see if `X` and `Y` max positions can be reached, and adjust `position_max`, if necessary. You might be able to go further, which is great, but I recommend leaving a 2mm gap for safety.
    1. `G28`
    2. `G90`
-   3. `G1 X223 F3000`
-   4. `G1 Y223 F3000`
-2. Do a mechanical gantry calibration; `G34`. After the controlled collision against the beam at the top, there will be a 10 second pause for you to verify that both sides of the gantry are pressed up against the `stoppers` at the top. You will hear a succession of beeps.
+   3. `G1 X300 F3000`
+   4. `G1 Y300 F3000`
+2. Do a mechanical gantry calibration; `G34`. After the controlled collision against the beam at the top, there will be a 10 second pause for you to verify that both sides of the gantry are pressed up against the `stoppers` at the top. ~~You will hear a succession of beeps.~~
    1. Figure out your `Z` `position_max` by baby stepping your way up to the beam, and adjust `position_max`, if necessary.
 3. PID tune the bed. Ideally, all PID tuning should occur at the temperatures that you print most at.
    1. `PID_TEST_BED TEMP=70`
@@ -228,10 +233,11 @@ This repository contains many files and folders. Some are _necessary_ for this K
 ├── misc ❌
 │   ├── klipper-v0.11.0-148-g52f4e20c.bin
 │   ├── M503-output.yml
-│   ├── marlin-SV06V2.0.0A_2.24.bin
+│   ├── M503-plus-output.yml
 │   ├── SuperSlicer_config_bundle.ini
 │   ├── sv06-buildPlate.png
-│   ├── SV06-buildPlate.stl
+│   ├── SV06Plus-buildPlate.stl
+│   ├── SV06-PLUSfirmware-2.23.rar
 │   └── SV06-texture.svg
 ├── moonraker.conf ✅
 ├── printer.cfg ✅
@@ -242,13 +248,13 @@ This repository contains many files and folders. Some are _necessary_ for this K
 
 ## Support Me
 
-Please ⭐ star this repository!
+${\normalsize{\textcolor{goldenrod}{\texttt{Please ⭐ star this repository!}}}}$
 
 If you found my work useful, consider buying me a [<img src="./images/logo_white_stroke.png" height="20" alt='Ko-fi'/>](https://ko-fi.com/bassamanator).
 
 ## FAQ
 
-##### How do I import a SuperSlicer configuration bundle (`SuperSlicer_config_bundle.ini`) into SuperSlicer?
+##### How do I import a configuration bundle into SuperSlicer/PrusaSlicer?
 
 Please see [this discussion](https://github.com/bassamanator/Sovol-SV06-firmware/discussions/13).
 
@@ -257,6 +263,8 @@ Please see [this discussion](https://github.com/bassamanator/Sovol-SV06-firmware
 Please see [this discussion](https://github.com/bassamanator/Sovol-SV06-firmware/discussions/14).
 
 ##### When does beeping occur?
+
+💡 Beeping will likely not work on the SV06 Plus. I recommend not turning it on.
 
 The printer will beep upon:
 
@@ -325,7 +333,7 @@ The printhead is now parked front center waiting for you to insert filament. You
 
 ##### How do I enable KAMP (Klipper Adaptive Meshing & Purging)?
 
-Although this repo contains all the code from the KAMP repository, only the `mesh` functionality of KAMP has been enabled and tested.
+Although this repo contains all the code from the KAMP repository, only the `mesh` functionality of KAMP has been configured and tested.
 
 The [Label objects setting](https://docs.mainsail.xyz/overview/features/exclude-objects#enable-the-label-objects-setting-in-your-slicer) in your slicer must be enabled for KAMP to work.
 
@@ -351,7 +359,7 @@ Find full instructions [here](https://ellis3dp.com/Print-Tuning-Guide/articles/d
 Some tips:
 
 - Before running with `ITERATIONS=40` with an untested speed/accel value, run with `ITERATIONS=1`.
-- Pay close attention throughout the run, so that you can click **`EMERGENCY STOP`** at a moment's notice.
+- Pay close attention throughout the run, so that you can click ${\small{\textcolor{red}{\texttt{EMERGENCY STOP}}}}$ at a moment's notice.
 - This macro will simply help you determine the maximum speed your printhead and bed can reliably move at, not necessarily print at. The bottleneck for my SV06, for example, is the 15mm/s^2 that the hotend maxes out at (well under 200mm/s actual print speed).
 
 ## Useful Resources
@@ -369,13 +377,16 @@ Some tips:
 
 ## Sources
 
-- https://www.klipper3d.org
-- https://ellis3dp.com/Print-Tuning-Guide
-- https://github.com/strayr/strayr-k-macros
-- https://docs.vorondesign.com/build/software/miniE3_v20_klipper.html
-- https://github.com/spinixguy/Sovol-SV06-firmware
-- https://www.printables.com/model/378915-sovol-sv06-buildplate-texture-and-model-for-prusas
-- https://github.com/AndrewEllis93/Ellis-SuperSlicer-Profiles
 - [Klipper Adaptive Meshing & Purging](https://github.com/kyleisah/Klipper-Adaptive-Meshing-Purging)
+- [PS print settings based on Ellis' SS print settings](https://github.com/mjonuschat/PrusaSlicer-Profiles)
+- [https://www.klipper3d.org](https://www.klipper3d.org)
+- [Ellis' Print Tuning Guide](https://ellis3dp.com/Print-Tuning-Guide)
+- [Mechanical Gantry Calibration Macro](https://github.com/strayr/strayr-k-macros)
+- [SV06 printer.cfg](https://github.com/spinixguy/Sovol-SV06-firmware)
+- [SV06 Buildplate and Texture](https://www.printables.com/model/378915-sovol-sv06-buildplate-texture-and-model-for-prusas)
+- [SV06 Plus Buildplate and Texture](https://www.printables.com/model/447787-sovol-sv06-plus-build-plate)
+- [Ellis' SuperSlicer Profiles](https://github.com/AndrewEllis93/Ellis-SuperSlicer-Profiles)
+- [Klipper Adaptive Meshing & Purging](https://github.com/kyleisah/Klipper-Adaptive-Meshing-Purging)
+- [PrusaSlicer Print Settings](https://github.com/mjonuschat/PrusaSlicer-Profiles)
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/H2H0HIHTH)
