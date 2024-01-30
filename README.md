@@ -416,3 +416,7 @@ Please see this [discussion](https://github.com/bassamanator/Sovol-SV06-firmware
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/H2H0HIHTH)
 
 [🔼 Back to top](#outline)
+
+
+## Rundles Additions
+Update /home/rundle to /home/pi
